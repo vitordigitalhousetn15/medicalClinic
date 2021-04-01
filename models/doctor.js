@@ -1,3 +1,6 @@
+const Sequelize = require("sequelize");
+const config = require("../config/database");
+
 let doctors = [
   {
     id: "1",
@@ -19,8 +22,16 @@ let doctors = [
   },
 ];
 
-function getDoctors() {
-  return doctors;
+async function getDoctors() {
+  const db = new Sequelize(config);
+
+  const result = await db.query("select * from doctor;", {
+    type: Sequelize.QueryTypes.SELECT,
+  });
+
+  console.log("result ", result);
+
+  return result;
 }
 
 function getDoctorById(doctorId) {

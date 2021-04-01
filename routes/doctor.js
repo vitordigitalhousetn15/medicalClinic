@@ -3,8 +3,8 @@ const doctorModel = require("../models/doctor");
 
 const router = express.Router();
 
-router.get("/", function (req, res) {
-  const doctors = doctorModel.getDoctors();
+router.get("/", async function (req, res) {
+  const doctors = await doctorModel.getDoctors();
   res.render("doctor", { doctors: doctors });
 });
 
