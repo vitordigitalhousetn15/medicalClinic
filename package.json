@@ -13,6 +13,11 @@
     "express-override": "^0.1.9",
     "http-errors": "~1.6.3",
     "method-override": "^3.0.0",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.2"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.2.0"
   }
 }
