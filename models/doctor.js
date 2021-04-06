@@ -1,3 +1,7 @@
+const Sequelize = require("sequelize");
+const config = require("../config/database");
+const db = new Sequelize(config);
+
 let doctors = [
   {
     id: "1",
@@ -13,14 +17,15 @@ let doctors = [
   },
   {
     id: "3",
-    name: "Marcela Costa",
+    name: "Marcela Costa Silva",
     crm: "SP-3032",
     document: "456.038.202.5",
   },
 ];
 
-function getDoctors() {
-  return doctors;
+async function getDoctors() {
+  const result = await db.query("select * from doctor;", { type: Sequelize.QueryTypes.SELECT });
+  return result;
 }
 
 function getDoctorById(doctorId) {
@@ -31,19 +36,26 @@ function getDoctorById(doctorId) {
   return doctors[index];
 }
 
-function insertDoctor(doctor) {
-  doctors.push(doctor);
-  return doctors;
+async function insertDoctor(doctor) {
+  await db.query("insert into doctor (name, document, crm) values (:name, :document, :crm)", {
+    replacements: {
+      name: doctor.name,
+      document: doctor.document,
+      crm: doctor.crm
+    }
+  })
 }
 
-function updateDoctor(doctor) {
-  const index = doctors.findIndex((obj) => {
-    return parseInt(obj.id) === parseInt(doctor.id);
-  });
-
-  doctors[index] = doctor;
-
-  return doctors[index];
+// update doctor set name = 'Laura Costa', document = '456.039', crm = '99878123' where id = '1234'
+async function updateDoctor(doctor) {
+  await db.query("update doctor set name = :name, document = :document, crm = :crm where id = :id", {
+    replacements: {
+      name: doctor.name,
+      document: doctor.document,
+      crm: doctor.crm,
+      id: doctor.id
+    }
+  })
 }
 
 function removeDoctor(doctorId) {
