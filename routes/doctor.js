@@ -8,9 +8,9 @@ router.get("/", async function (req, res) {
   res.render("doctor", { doctors: doctors });
 });
 
-router.get("/edit/:id", function (req, res) {
+router.get("/edit/:id", async function (req, res) {
   const doctorId = req.params.id;
-  const doctor = doctorModel.getDoctorById(doctorId);
+  const doctor = await doctorModel.getDoctorById(doctorId);
   res.render("doctor/edit", { doctor: doctor });
 });
 
