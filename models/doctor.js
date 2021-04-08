@@ -2,38 +2,20 @@ const Sequelize = require("sequelize");
 const config = require("../config/database");
 const db = new Sequelize(config);
 
-let doctors = [
-  {
-    id: "1",
-    name: "Vitor José",
-    crm: "SP-3030",
-    document: "456.038.444.8",
-  },
-  {
-    id: "2",
-    name: "Carlos Sanchez Costa",
-    crm: "SP-3031",
-    document: "456.038.456.9",
-  },
-  {
-    id: "3",
-    name: "Marcela Costa Silva",
-    crm: "SP-3032",
-    document: "456.038.202.5",
-  },
-];
 
 async function getDoctors() {
   const result = await db.query("select * from doctor;", { type: Sequelize.QueryTypes.SELECT });
   return result;
 }
-
-function getDoctorById(doctorId) {
-  const index = doctors.findIndex((obj) => {
-    return parseInt(obj.id) === parseInt(doctorId);
+async function getDoctorById(id) {
+  const result = await db.query("select * from doctor where id = :doctorId", {
+    type: Sequelize.QueryTypes.SELECT,
+    replacements: {
+      doctorId: id
+    }
   });
 
-  return doctors[index];
+  return result[0];
 }
 
 async function insertDoctor(doctor) {
@@ -58,10 +40,12 @@ async function updateDoctor(doctor) {
   })
 }
 
-function removeDoctor(doctorId) {
-  doctors = doctors.filter(
-    (doctor) => parseInt(doctor.id) !== parseInt(doctorId)
-  );
+async function removeDoctor(doctorId) {
+  await db.query("delete from doctor where id = :id", {
+    replacements: {
+      id: doctorId
+    }
+  })
 }
 
 module.exports = {
