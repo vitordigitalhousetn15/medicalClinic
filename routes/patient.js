@@ -3,8 +3,9 @@ const patientModel = require("../models/patient");
 
 const router = express.Router();
 
-router.get("/", function (req, res) {
-  const patients = patientModel.getPatient();
+router.get("/", async function (req, res) {
+  const initialLetter = req.query.initialLetter;
+  const patients = await patientModel.getPatient(initialLetter);
   res.render("patient", { patients: patients });
 });
 

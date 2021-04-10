@@ -1,3 +1,7 @@
+const Sequelize = require("sequelize");
+const config = require("../config/database");
+const db = new Sequelize(config);
+
 let patients = [
   {
     id: "1",
@@ -22,8 +26,20 @@ let patients = [
   },
 ];
 
-function getPatient() {
-  return patients;
+async function getPatient(initialLetter) {
+  let searchQuery = "select * from patient;";
+  if(initialLetter !== undefined) {
+    searchQuery = "select * from patient where LOWER(name) like :initialLetter";
+  }
+
+  const result = await db.query(searchQuery, {
+    type: Sequelize.QueryTypes.SELECT,
+    replacements: {
+      initialLetter: initialLetter + '%'
+    }
+  });
+
+  return result
 }
 
 function getPatientById(patientId) {
@@ -34,9 +50,15 @@ function getPatientById(patientId) {
   return patients[index];
 }
 
-function insertPatient(patient) {
-  patients.push(patient);
-  return patients;
+async function insertPatient(patient) {
+  await db.query('insert into patient (name, document, birth_date, gender) values (:name, :document, :birth_date, :gender);', {
+    replacements: {
+      name: patient.name,
+      document: patient.document,
+      birth_date: patient.birth_date,
+      gender: patient.gender
+    }
+  });
 }
 
 function updatePatient(patient) {
