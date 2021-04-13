@@ -8,7 +8,24 @@
     <%- include('partials/header') %>
 
     <main>
-      attendance
+      <form action="" method="POST">
+        <label>Doutores</label>
+        <select name="cars" id="cars">
+          <% doctors.forEach(function(doctor) {%>
+          <option value="<%- doctor.id %>"><%- doctor.name %></option>
+          <% }); %>
+        </select>
+
+        <label>Pacientes</label>
+        <select name="cars" id="cars">
+          <% patients.forEach(function(patient) {%>
+          <option value="<%- patient.id %>"><%- patient.name %></option>
+          <% }); %>
+        </select>
+
+        <button type="submit">Agendar</button>
+        <button type="reset">cancelar</button>
+      </form>
     </main>
 
     <!-- Bootstrap core JavaScript
