@@ -99,7 +99,21 @@
       </section>
       <section class="mt-3">
         <h3>Cadastro novo paciente</h3>
-        <form action="" method="post">
+
+ 
+
+        <form id="register-patient" action="" method="post">
+          <div class="alert-danger d-none">
+            O seguinte campo é obrigatório:
+            <ul>
+              <li class="d-none" id="invalid-name">Nome</li>
+              <li class="d-none" id="invalid-birth-date">Dt. Nascimento</li>
+              <li class="d-none" id="invalid-document">Documento</li>
+              <li class="d-none" id="invalid-gender">Genero</li>
+            </ul>
+          </div>
+
+
           <div class="row">
             <div class="col-md-3">
               <div class="row">
