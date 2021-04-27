@@ -6,6 +6,15 @@ const router = express.Router();
 router.get("/", async function (req, res) {
   const initialLetter = req.query.initialLetter;
   const patients = await patientModel.getPatient(initialLetter);
+
+  if ('json' in req.query) {
+    return res.json({
+      data: {
+        patients: patients,
+      },
+    });
+  }
+
   res.render("patient", { patients: patients });
 });
 

@@ -5,6 +5,14 @@ const router = express.Router();
 
 router.get("/", async function (req, res) {
   const doctors = await doctorModel.getDoctors();
+
+  if ('json' in req.query) {
+    return res.json({
+      data: {
+        doctors: doctors,
+      },
+    });
+  }
   res.render("doctor", { doctors: doctors });
 });
 
@@ -30,8 +38,8 @@ router.delete("/:id", async function (req, res) {
   const doctorId = req.params.id;
 
   await doctorModel.removeDoctor(doctorId);
-  
-  if(req.query.json) {
+
+  if (req.query.json) {
     return res.sendStatus(200);
   }
   res.redirect("/doctor");
