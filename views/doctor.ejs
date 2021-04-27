@@ -24,7 +24,7 @@
           </thead>
           <tbody>
             <% doctors.forEach(function(doctor) { %>
-            <tr>
+            <tr id="doctor-<%-doctor.id%>">
               <th scope="row"><%- doctor.id %></th>
               <td><%- doctor.name %></td>
               <td><%- doctor.document %></td>
@@ -41,12 +41,12 @@
                     </a>
                   </div>
                   <div class="col-md-3">
-                    <form method="POST" action="/doctor?_method=DELETE">
-                      <input type="text" hidden name="id" value="<%-doctor.id%>" />
-                      <button type="submit" class="btn btn-danger">
+                    <!-- <form method="POST" action="/doctor?_method=DELETE"> -->
+                      <!-- <input type="text" hidden name="id" value="<%-doctor.id%>" /> -->
+                      <button role="delete" data-doctor-id="<%-doctor.id%>" type="submit" class="btn btn-danger">
                         Excluir
                       </button>
-                    </form>
+                    <!-- </form> -->
                   </div>
                 </div>
               </td>
@@ -123,5 +123,7 @@
       integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
       crossorigin="anonymous"
     ></script>
+    <script src="/javascripts/doctor.js">
+    </script>
   </body>
 </html>

@@ -26,10 +26,14 @@ router.put("/", async function (req, res) {
   res.redirect("/doctor");
 });
 
-router.delete("/", async function (req, res) {
-  const doctor = req.body;
+router.delete("/:id", async function (req, res) {
+  const doctorId = req.params.id;
 
-  await doctorModel.removeDoctor(doctor.id);
+  await doctorModel.removeDoctor(doctorId);
+  
+  if(req.query.json) {
+    return res.sendStatus(200);
+  }
   res.redirect("/doctor");
 });
 
